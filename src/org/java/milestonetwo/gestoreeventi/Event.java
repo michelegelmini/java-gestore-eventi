@@ -10,7 +10,11 @@ public class Event {
 	private int reservedSeats;
 	
 	
-	//constructor
+	//constructors
+	public Event() {
+	
+	}
+	
 	public Event (String title, Calendar date, int totalSeats) {
 		this.title = title;
 		this.reservedSeats = 0;
@@ -24,6 +28,8 @@ public class Event {
 		this.date = date;
 		
 	}
+
+	
 
 	//getters and setters
 	public String getTitle() {
@@ -45,10 +51,12 @@ public class Event {
 	
 
 	public void setDate(Calendar date) {
-		while (!(date.after(Calendar.getInstance()))) {
+		if ((date.after(Calendar.getInstance()))) {
+			this.date = date;
+		} else {
 			System.out.println("Non hai inserito una data valida, riprova");
 		}
-		this.date = date;
+		
 		
 	}
 
@@ -65,6 +73,7 @@ public class Event {
 	}
 	
 	public void reserveSeat() {
+		
 		int availableSeats = totalSeats;			
 		if (availableSeats > 0) {
 			reservedSeats += 1;
