@@ -1,5 +1,8 @@
 package org.java.milestonetwo.gestoreeventi;
 
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
@@ -24,8 +27,11 @@ public class Main {
 			boolean validDate;
 			do { 
 				//scanning user input
-				System.out.println("Inseriamo la data in cui si terrà: " + "\n" + "anno: ");
+				//year
+				System.out.println("Inserisci la data in cui si terrà: " + "\n" + "anno: ");
 				int eventYear = scanner.nextInt();
+			
+				//month
 				System.out.println("mese: ");
 				int eventMonth = scanner.nextInt();
 					if (eventMonth > 12) {
@@ -34,20 +40,30 @@ public class Main {
 								eventMonth = scanner.nextInt();
 							} while (eventMonth > 12); 
 						}
-				System.out.println("giorno: ");
-				int eventDay = scanner.nextInt();
-					if (eventDay > 31) {
-						do {
-								System.out.println("Inserisci un giorno valido: ");
-								eventDay = scanner.nextInt();
-							} while (eventDay > 31); 
-						}
+				
+				//day
+					int eventDay;
+					boolean validDay;
+					YearMonth date = YearMonth.of(eventYear, eventMonth);
+				do {	
+					System.out.println("giorno: ");
+					eventDay = scanner.nextInt();
+
+					validDay = date.isValidDay(eventDay);
+						if (!(validDay)) {
+							System.out.println("Inserisci un giorno valido: ");
+							eventDay = scanner.nextInt();
+							} 
+					} while (!(validDay));
 				
 				//assign user input to event calendar
 				eventCalendar.set(eventYear, eventMonth - 1, eventDay);
 				
 				//date validation
 				validDate = eventCalendar.after(Calendar.getInstance());
+				
+				
+				
 				if (!(validDate)){
 					System.out.println("L'evento non può essere nel passato, riprova");
 				}
