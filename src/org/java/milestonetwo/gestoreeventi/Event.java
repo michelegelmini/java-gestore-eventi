@@ -9,13 +9,18 @@ public class Event {
 	private int totalSeats;
 	private int reservedSeats;
 	
+	
 	//constructor
 	public Event (String title, Calendar date, int totalSeats) {
 		this.title = title;
 		this.reservedSeats = 0;
-		if (this.totalSeats >= 1) {
+		
+		if (this.totalSeats <= 1) {
 			this.totalSeats = totalSeats;	
+		} else {
+			System.out.println("Non hai inserito un numero di posti valido");
 		}
+		
 		this.date = date;
 		
 	}
@@ -34,7 +39,7 @@ public class Event {
 		int month = date.get(Calendar.MONTH) + 1; 
 		int year = date.get(Calendar.YEAR);
 		
-		return "L'evento sarà in data: " + day + "-" + month + "-" + year;
+		return day + "-" + month + "-" + year;
 	}
 		 
 	
@@ -55,7 +60,35 @@ public class Event {
 		return reservedSeats;
 	}
 	
+	public int getAvailableSeats() {
+		return totalSeats - reservedSeats;
+	}
 	
+	public void reserveSeat() {
+		int availableSeats = totalSeats;			
+		if (availableSeats > 0) {
+			reservedSeats += 1;
+			availableSeats = totalSeats - reservedSeats;
+		}
+		
+		if (availableSeats > 1) {
+			System.out.println("Grazie per aver prenotato!" + "\n" + "Ci sono ancora " + availableSeats + " posti disponibili.");
+		} else if (availableSeats == 1) {
+			System.out.println("C'è solo un ultimo posto disponibile!");			
+		} else {
+			System.out.println("Non ci sono più posti disponibli.");
+		}
+	}
+	
+	public void cancelReservation() {
+		reservedSeats -= 1;
+		System.out.println("La tua prenotazione è annullata");
+	}
+	
+	@Override
+	public String toString() {
+		return "L'evento " + this.title + " sarà in data: " + this.getDate();
+	}
 	
 	
 	

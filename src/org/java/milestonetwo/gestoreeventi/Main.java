@@ -7,10 +7,18 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		Event concertone = new Event("primomaggio", new GregorianCalendar(2024, 9, 5), 500);
+		Event concertone = new Event("primomaggio", new GregorianCalendar(2024, 9, 5), 4);
 		
+		 concertone.reserveSeat();
+		 concertone.reserveSeat();
 		 
-		System.out.println(concertone.getDate());
+		 concertone.cancelReservation();
+		 
+		 System.out.println(concertone.getAvailableSeats());
+		 
+		 System.out.println(concertone.toString());
+		
+	
 		 
 	}
 
