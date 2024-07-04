@@ -93,14 +93,29 @@ public class Main {
 			Event testEvent = new Event(eventTitle, eventCalendar, eventSeats);
 			
 			System.out.println("You created the event:" + "\n" + testEvent.toString());
-			System.out.println("For now there are " + testEvent.getAvailableSeats() + " seats available.");
+			//System.out.println("For now there are " + testEvent.getAvailableSeats() + " seats available.");
 			
 			//reserving seats
 			System.out.println("How many seats would you like to reserve?");
 			int seatsToReserve = scanner.nextInt();
-			testEvent.reserveSeat(seatsToReserve);
+			if (seatsToReserve < 0 ) {
+				do {					
+				System.out.println("Please insert a valid number.");
+				seatsToReserve = scanner.nextInt();
+				} while (seatsToReserve < 0);
+			}
+			testEvent.reserveSeat(seatsToReserve);	
+			
+			
+			//System.out.println("For now there are " + testEvent.getAvailableSeats() + " seats available.");
 			
 			System.out.println("-----------------------------------------");
+			System.out.println(testEvent.getIntAvailableSeats());
+			System.out.println(testEvent.getReservedSeats());
+			System.out.println("-----------------------------------------");
+			
+			
+			
 			int choiche;
 						
 			do {
@@ -115,16 +130,31 @@ public class Main {
 			
 				 switch(choiche) {
 				 	case 1: 
+				 		if (testEvent.getIntAvailableSeats() > 1) {
 				 		System.out.println("How many seats would you like to reserve?");
 				 		seatsToReserve = scanner.nextInt();
 				 		testEvent.reserveSeat(seatsToReserve);
 				 		break;
+				 		} else {
+				 			System.out.println(testEvent.getAvailableSeats());
+				 		}
 				 	
 				 	case 2:
+				 		if (testEvent.getIntAvailableSeats() == testEvent.getTotalSeats()) {
+				 			System.out.println("There are no seats to cancel!");
+				 			break;
+				 		} else {
 				 		System.out.println("How many seats reservation would you like to cancel?");
 				 		int seatsToCancel = scanner.nextInt();
-				 		testEvent.cancelReservation(seatsToCancel);
+				 		if (seatsToCancel < 0 || (seatsToCancel < testEvent.getIntAvailableSeats() && seatsToCancel < testEvent.getTotalSeats())) {
+							do {					
+							System.out.println("Please insert a valid number.");
+							seatsToCancel = scanner.nextInt();
+							} while (seatsToCancel < 0);
+						}
+						testEvent.cancelReservation(seatsToCancel);
 				 		break;
+				 		}
 				 		
 				 	case 3:
 				 		System.out.println("Your reservation is completed, thank you. Bye!");

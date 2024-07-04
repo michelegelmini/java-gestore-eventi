@@ -57,51 +57,57 @@ public class Event {
 		return reservedSeats;
 	}
 	
-	public int getAvailableSeats() {
+	public int getIntAvailableSeats() {
 		return totalSeats - reservedSeats;
 	}
 	
+	public String getAvailableSeats() {
+		int availableSeats = totalSeats - reservedSeats;			
+				
+		if (availableSeats > 1) {
+			return "There are still " + availableSeats + " available seats.";
+		} else if (availableSeats == 1) {
+			return "There is only one seat left!";			
+		} else {
+			return "There are no more seats left.";
+		}
+}
+		
+	
+	
 	public void reserveSeat(int seatsToReserve) {
-		try (Scanner scanner = new Scanner(System.in)) {
+		
 			int availableSeats = totalSeats;			
 			if (availableSeats > 0) {
 				reservedSeats += seatsToReserve;
 				availableSeats = totalSeats - reservedSeats;
-			}
-			
-			if (seatsToReserve < 0) {
-				do {					
+			} else {
 				System.out.println("Please insert a valid number.");
-				seatsToReserve = scanner.nextInt();
-				} while (seatsToReserve < 0);
 			}
-		
 			
 			if (availableSeats > 1 && seatsToReserve == 1) {
-				System.out.println("Thanks, you have reserved a seat!" + "\n" + "There are still " + availableSeats + " available seats.");
-			} else if (availableSeats > 1 && seatsToReserve > 1) {
-				System.out.println("Thanks, you have reserved" + seatsToReserve + " seats! " + "\n" + "There are still " + availableSeats + " available seats.");
-			} else if (availableSeats == 1) {
-				System.out.println("There is only one seat left!");			
-			} else {
-				System.out.println("There are no more seats left.");
+				System.out.println("Thanks, you have reserved a seat!" + "\n" + this.getAvailableSeats());
+			} else if (seatsToReserve > 1) {
+				System.out.println("Thanks, you have reserved " + seatsToReserve + " seats! " + this.getAvailableSeats());
 			}
-	}
+				
+//			} else if (availableSeats == 1) {
+//				System.out.println(this.getAvailableSeats());			
+//			} else {
+//				System.out.println(this.getAvailableSeats());
+//			}
 	}
 	
+	
 	public void cancelReservation(int seatsToCancel) {
-		try (Scanner scanner = new Scanner(System.in)){
-		if (seatsToCancel < 0) {
-			do {					
-			System.out.println("Please insert a valid number.");
-			seatsToCancel = scanner.nextInt();
-			} while (seatsToCancel < 0);
-		}
+	
+		
 		reservedSeats -= seatsToCancel;
 		
 		System.out.println("Your reservation was canceled.");
+		System.out.println(this.getAvailableSeats());
 	}
-	}
+	
 	
 	@Override
 	public String toString() {
