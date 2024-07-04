@@ -18,6 +18,7 @@ public class Main {
 		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
 		
 		try (Scanner scanner = new Scanner(System.in)){
+			while (true) {
 			
 			//insert event title
 			System.out.println("Hi! You're about to create an event" + "\n" + "What will be the event title?");
@@ -99,13 +100,17 @@ public class Main {
 			int seatsToReserve = scanner.nextInt();
 			testEvent.reserveSeat(seatsToReserve);
 			
-			
-		int choiche;
-			
+			System.out.println("-----------------------------------------");
+			int choiche;
+						
 			do {
 				System.out.println("What do you want to do now?" + "\n" + "1: Reserve more seats" + "\n" + "2: Cancel reservation" + "\n" + "3: Exit");
 				choiche = scanner.nextInt();
 				scanner.nextLine();
+				
+				if (choiche > 3) {
+					break;
+				}
 				
 			
 				 switch(choiche) {
@@ -128,6 +133,8 @@ public class Main {
 				 	default:
 				 		continue;
 				 } 
+				
+				
 			 
 			} while (choiche != 3);
 		
@@ -135,7 +142,7 @@ public class Main {
 			
 			
 		}
-		 
+		}
 		
 	
 		 
