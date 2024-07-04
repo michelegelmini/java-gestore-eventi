@@ -15,11 +15,12 @@ public class Main {
 		String eventTitle;
 		int eventSeats;
 		GregorianCalendar eventCalendar = new GregorianCalendar();
+		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
 		
 		try (Scanner scanner = new Scanner(System.in)){
 			
 			//insert event title
-			System.out.println("Ciao! Stai per creare il tuo evento!" + "\n" + "Come si chiamerà?");
+			System.out.println("Hi! You're about to create an event" + "\n" + "What will be the event title?");
 			eventTitle = scanner.nextLine();
 			
 			
@@ -28,15 +29,22 @@ public class Main {
 			do { 
 				//scanning user input
 				//year
-				System.out.println("Inserisci la data in cui si terrà: " + "\n" + "anno: ");
+				System.out.println("When it's going to be? " + "\n" + "Year: ");
 				int eventYear = scanner.nextInt();
-			
+					if (eventYear < currentYear) {
+						do {
+						System.out.println("The event can't take place in the past, try again");
+						System.out.println("Please, insert a valid year: ");
+						eventYear = scanner.nextInt();
+					} while (eventYear < currentYear);
+					}
+				
 				//month
-				System.out.println("mese: ");
+				System.out.println("Month: ");
 				int eventMonth = scanner.nextInt();
 					if (eventMonth > 12) {
 						do {
-								System.out.println("Inserisci un mese valido: ");
+								System.out.println("Please, insert a valid month: ");
 								eventMonth = scanner.nextInt();
 							} while (eventMonth > 12); 
 						}
@@ -48,11 +56,12 @@ public class Main {
 				do {	
 					System.out.println("giorno: ");
 					eventDay = scanner.nextInt();
-
 					validDay = date.isValidDay(eventDay);
+
 						if (!(validDay)) {
-							System.out.println("Inserisci un giorno valido: ");
+							System.out.println("Please, insert a valid day: ");
 							eventDay = scanner.nextInt();
+							validDay = date.isValidDay(eventDay);
 							} 
 					} while (!(validDay));
 				
@@ -65,25 +74,65 @@ public class Main {
 				
 				
 				if (!(validDate)){
-					System.out.println("L'evento non può essere nel passato, riprova");
+					System.out.println("The event can't take place in the past, try again");
 				}
 				
 			} while (!(validDate));
 			
 			//insert event available seats
 			do {
-			System.out.println("Quanti posti ci saranno?");
+			System.out.println("How many seats there will be?");
 			eventSeats = scanner.nextInt();
-				if (eventSeats < 0) {
-					System.out.println("L'evento deve avere almeno un posto!");
+				if (eventSeats < 10) {
+					System.out.println("The event shoul have at least 10 seats!");
 				}
 			
-			} while (eventSeats < 0);
+			} while (eventSeats < 10);
 			
 			Event testEvent = new Event(eventTitle, eventCalendar, eventSeats);
 			
-			System.out.println("Congratulazioni! Hai creato l'evento!" + "\n" + testEvent.toString());
-			System.out.println("Al momento ci sono " + testEvent.getAvailableSeats() + " posti disponibili.");
+			System.out.println("You created the event:" + "\n" + testEvent.toString());
+			System.out.println("For now there are " + testEvent.getAvailableSeats() + " seats available.");
+			
+			//reserving seats
+			System.out.println("How many seats would you like to reserve?");
+			int seatsToReserve = scanner.nextInt();
+			testEvent.reserveSeat(seatsToReserve);
+			
+			
+		int choiche;
+			
+			do {
+				System.out.println("What do you want to do now?" + "\n" + "1: Reserve more seats" + "\n" + "2: Cancel reservation" + "\n" + "3: Exit");
+				choiche = scanner.nextInt();
+				scanner.nextLine();
+				
+			
+				 switch(choiche) {
+				 	case 1: 
+				 		System.out.println("How many seats would you like to reserve?");
+				 		seatsToReserve = scanner.nextInt();
+				 		testEvent.reserveSeat(seatsToReserve);
+				 		break;
+				 	
+				 	case 2:
+				 		System.out.println("How many seats reservation would you like to cancel?");
+				 		int seatsToCancel = scanner.nextInt();
+				 		testEvent.cancelReservation(seatsToCancel);
+				 		break;
+				 		
+				 	case 3:
+				 		System.out.println("Your reservation is completed, thank you. Bye!");
+				 		break;
+				 		
+				 	default:
+				 		continue;
+				 } 
+			 
+			} while (choiche != 3);
+		
+	
+			
 			
 		}
 		 

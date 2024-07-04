@@ -1,5 +1,6 @@
 package org.java.milestonetwo.gestoreeventi;
 import java.util.Calendar;
+import java.util.Scanner;
 
 public class Event {
 	
@@ -18,13 +19,7 @@ public class Event {
 	public Event (String title, Calendar date, int totalSeats) {
 		this.title = title;
 		this.reservedSeats = 0;
-		
-		if (this.totalSeats <= 1) {
-			this.totalSeats = totalSeats;	
-		} else {
-			System.out.println("Non hai inserito un numero di posti valido");
-		}
-		
+		this.totalSeats = totalSeats;		
 		this.date = date;
 		
 	}
@@ -51,14 +46,8 @@ public class Event {
 	
 
 	public void setDate(Calendar date) {
-		if ((date.after(Calendar.getInstance()))) {
 			this.date = date;
-		} else {
-			System.out.println("Non hai inserito una data valida, riprova");
-		}
-		
-		
-	}
+			}
 
 	public int getTotalSeats() {
 		return totalSeats;
@@ -72,31 +61,51 @@ public class Event {
 		return totalSeats - reservedSeats;
 	}
 	
-	public void reserveSeat() {
+	public void reserveSeat(int seatsToReserve) {
+		try (Scanner scanner = new Scanner(System.in)) {
+			int availableSeats = totalSeats;			
+			if (availableSeats > 0) {
+				reservedSeats += seatsToReserve;
+				availableSeats = totalSeats - reservedSeats;
+			}
+			
+			if (seatsToReserve < 0) {
+				do {					
+				System.out.println("Please insert a valid number.");
+				seatsToReserve = scanner.nextInt();
+				} while (seatsToReserve < 0);
+			}
 		
-		int availableSeats = totalSeats;			
-		if (availableSeats > 0) {
-			reservedSeats += 1;
-			availableSeats = totalSeats - reservedSeats;
-		}
-		
-		if (availableSeats > 1) {
-			System.out.println("Grazie per aver prenotato!" + "\n" + "Ci sono ancora " + availableSeats + " posti disponibili.");
-		} else if (availableSeats == 1) {
-			System.out.println("C'è solo un ultimo posto disponibile!");			
-		} else {
-			System.out.println("Non ci sono più posti disponibli.");
-		}
+			
+			if (availableSeats > 1 && seatsToReserve == 1) {
+				System.out.println("Thanks, you have reserved a seat!" + "\n" + "There are still " + availableSeats + " available seats.");
+			} else if (availableSeats > 1 && seatsToReserve > 1) {
+				System.out.println("Thanks, you have reserved" + seatsToReserve + " seats! " + "\n" + "There are still " + availableSeats + " available seats.");
+			} else if (availableSeats == 1) {
+				System.out.println("There is only one seat left!");			
+			} else {
+				System.out.println("There are no more seats left.");
+			}
+	}
 	}
 	
-	public void cancelReservation() {
-		reservedSeats -= 1;
-		System.out.println("La tua prenotazione è annullata");
+	public void cancelReservation(int seatsToCancel) {
+		try (Scanner scanner = new Scanner(System.in)){
+		if (seatsToCancel < 0) {
+			do {					
+			System.out.println("Please insert a valid number.");
+			seatsToCancel = scanner.nextInt();
+			} while (seatsToCancel < 0);
+		}
+		reservedSeats -= seatsToCancel;
+		
+		System.out.println("Your reservation was canceled.");
+	}
 	}
 	
 	@Override
 	public String toString() {
-		return "L'evento " + this.title + " sarà in data: " + this.getDate();
+		return this.getDate() + " - " + this.title;
 	}
 	
 	
