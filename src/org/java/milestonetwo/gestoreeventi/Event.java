@@ -1,6 +1,6 @@
 package org.java.milestonetwo.gestoreeventi;
 import java.util.Calendar;
-import java.util.Scanner;
+
 
 public class Event {
 	
@@ -9,19 +9,16 @@ public class Event {
 	private Calendar date;
 	private int totalSeats;
 	private int reservedSeats;
+	private int availableSeats;
 	
 	
-	//constructors
-	public Event() {
-	
-	}
-	
+	//constructor	
 	public Event (String title, Calendar date, int totalSeats) {
 		this.title = title;
 		this.reservedSeats = 0;
 		this.totalSeats = totalSeats;		
 		this.date = date;
-		
+		this.availableSeats = totalSeats - reservedSeats;	
 	}
 
 	
@@ -45,9 +42,14 @@ public class Event {
 		 
 	
 
-	public void setDate(Calendar date) {
+	public boolean setDate(Calendar date) {
+		if (date.after(Calendar.getInstance())) {	
 			this.date = date;
+			return true;
+			} else {
+			return false;
 			}
+	}
 
 	public int getTotalSeats() {
 		return totalSeats;
@@ -57,13 +59,12 @@ public class Event {
 		return reservedSeats;
 	}
 	
-	public int getIntAvailableSeats() {
-		return totalSeats - reservedSeats;
+	public int getAvailableSeats() {
+		return availableSeats;
 	}
 	
-	public String getAvailableSeats() {
-		int availableSeats = totalSeats - reservedSeats;			
-				
+	public String getStringAvailableSeats() {				
+		
 		if (availableSeats > 1) {
 			return "There are still " + availableSeats + " available seats.";
 		} else if (availableSeats == 1) {
@@ -75,37 +76,30 @@ public class Event {
 		
 	
 	
-	public void reserveSeat(int seatsToReserve) {
-		
-			int availableSeats = totalSeats;			
+	public int reserveSeat(int seatsToReserve) {
+					
 			if (availableSeats > 0) {
 				reservedSeats += seatsToReserve;
 				availableSeats = totalSeats - reservedSeats;
+				return this.getAvailableSeats();
 			} else {
-				System.out.println("Please insert a valid number.");
+				return 0;
 			}
 			
-			if (availableSeats > 1 && seatsToReserve == 1) {
-				System.out.println("Thanks, you have reserved a seat!" + "\n" + this.getAvailableSeats());
-			} else if (seatsToReserve > 1) {
-				System.out.println("Thanks, you have reserved " + seatsToReserve + " seats! " + this.getAvailableSeats());
-			}
+			
 				
-//			} else if (availableSeats == 1) {
-//				System.out.println(this.getAvailableSeats());			
-//			} else {
-//				System.out.println(this.getAvailableSeats());
-//			}
 	}
 	
 	
-	public void cancelReservation(int seatsToCancel) {
-	
+	public int cancelReservation(int seatsToCancel) {
+		if (seatsToCancel > 0 && seatsToCancel <= reservedSeats) {
+			reservedSeats -= seatsToCancel;
+			availableSeats = totalSeats - reservedSeats;
+			return this.getAvailableSeats();
+		} else {
+			return 0;
+		}
 		
-		reservedSeats -= seatsToCancel;
-		
-		System.out.println("Your reservation was canceled.");
-		System.out.println(this.getAvailableSeats());
 	}
 	
 	
