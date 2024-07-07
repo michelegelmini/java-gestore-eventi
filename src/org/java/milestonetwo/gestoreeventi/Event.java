@@ -1,4 +1,5 @@
 package org.java.milestonetwo.gestoreeventi;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 
@@ -33,18 +34,16 @@ public class Event {
 	}
 
 	public String getDate() {
-		int day = date.get(Calendar.DAY_OF_MONTH);
-		int month = date.get(Calendar.MONTH) + 1; 
-		int year = date.get(Calendar.YEAR);
-		
-		return day + "-" + month + "-" + year;
+		return new SimpleDateFormat("E, dd MMMM yyyy").format(date.getTime());
 	}
 		 
-	
-
-	public boolean setDate(Calendar date) {
-		if (date.after(Calendar.getInstance())) {	
+	public void setDate(Calendar date) {
 			this.date = date;
+			
+	}
+	
+	public boolean isValidDate(Calendar date) {
+		if (date.after(Calendar.getInstance())) {	
 			return true;
 			} else {
 			return false;
@@ -76,18 +75,15 @@ public class Event {
 		
 	
 	
-	public int reserveSeat(int seatsToReserve) {
-					
-			if (availableSeats > 0) {
+	public int reserveSeat(int seatsToReserve) {	
+		availableSeats = this.getAvailableSeats();
+		if (seatsToReserve > 0 && seatsToReserve <= availableSeats) {
 				reservedSeats += seatsToReserve;
-				availableSeats = totalSeats - reservedSeats;
+				this.availableSeats = totalSeats - reservedSeats;
 				return this.getAvailableSeats();
 			} else {
 				return 0;
-			}
-			
-			
-				
+			}			
 	}
 	
 	

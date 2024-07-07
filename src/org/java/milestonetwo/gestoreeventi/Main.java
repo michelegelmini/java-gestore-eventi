@@ -6,6 +6,7 @@ import java.util.GregorianCalendar;
 import java.util.Scanner;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 
 public class Main {
 
@@ -15,7 +16,7 @@ public class Main {
 		String eventTitle;
 		int eventSeats;
 		Calendar eventCalendar = new GregorianCalendar();
-//		eventCalendar = Calendar.getInstance();
+		eventCalendar = Calendar.getInstance();
 		Scanner scanner = new Scanner(System.in);
 	
 		
@@ -25,7 +26,6 @@ public class Main {
 			
 			//insert event title
 			System.out.println("Hi! You're about to create an event" + "\n" + "What will be the event title?");
-
 			eventTitle = scanner.nextLine();
 						
 			//insert event available seats
@@ -34,12 +34,15 @@ public class Main {
 			eventSeats = scanner.nextInt();
 			scanner.nextLine();
 				if (eventSeats < 10) {
-					System.out.println("The event shoul have at least 10 seats!");
-				}
-			
+					System.out.println("The event should have at least 10 seats!");
+				}		
 			} while (eventSeats < 10);
 			
+		
 			Event testEvent = new Event(eventTitle, eventCalendar, eventSeats);
+			
+			
+			
 			
 			//insert event date
 			do {
@@ -50,18 +53,36 @@ public class Main {
 				eventCalendar.setTime(thedate);
 				testEvent.setDate(eventCalendar);
 				
-					if (!(testEvent.setDate(eventCalendar))) {
+					if (!(testEvent.isValidDate(eventCalendar))) {
 							System.out.println("The event can't take place in the past, try again");
-						}
-					
-							
-			} while (!(testEvent.setDate(eventCalendar)));
+						}							
+			} while (!(testEvent.isValidDate(eventCalendar)));
 			
 			
 			
 			System.out.println("You created the event:" + "\n" + testEvent.toString());
+			//testEvent.reserveSeat(10);
 			System.out.println(testEvent.getStringAvailableSeats());
+			
+
 				
+			System.out.println("Is your event a concert?" + "\n" + "1: Yes" + "\n" + "2: No");
+			int yn = 0;
+			while (yn == 0) {
+				String isConcert = scanner.nextLine();
+				if (isConcert.equals("Yes") || isConcert.equals("Y") ||isConcert.equals("1")) {
+					System.out.println("At what thime will it start?");
+					String concertStartingTime = scanner.next();
+					System.out.println("How much will it cost?");
+					double concertPrice = scanner.nextDouble();
+					
+					testEvent = new Concert(eventTitle, eventCalendar, eventSeats, concertPrice, LocalTime.parse(concertStartingTime));
+					
+					yn = 1;
+				} else if (isConcert.equals("No") || isConcert.equals("N") || isConcert.equals("2")) {
+					yn = 1;	
+				}
+			}
 			
 			
 			//loop to reserve or cancel a seat
@@ -74,16 +95,23 @@ public class Main {
 			
 				 switch(choice) {
 				 	case 1: 
-				 		if (testEvent.getAvailableSeats() > 1) {
-					 		System.out.println("How many seats would you like to reserve?");
-					 		int seatsToReserve = scanner.nextInt();
-					 		testEvent.reserveSeat(seatsToReserve);
-					 			
+				 		if (testEvent.getAvailableSeats() >= 1) {
+				 			
+				 			System.out.println("How many seats would you like to reserve?");
+				 			int seatsToReserve = scanner.nextInt();	
+				 		
 					 			if (seatsToReserve > testEvent.getAvailableSeats()) {
-					 				System.out.println("There are not that much seats to reserve!");
-					 			} else if (testEvent.getAvailableSeats() > 1 && seatsToReserve == 1) {
+						 			do{
+						 				System.out.println("Please insert a valid number.");
+						 				seatsToReserve = scanner.nextInt();					 											 		
+							 		} while (seatsToReserve > testEvent.getAvailableSeats());
+					 			} 
+				 			
+					 			 if (seatsToReserve == 1) {	
+					 				testEvent.reserveSeat(seatsToReserve);
 									System.out.println("Thanks, you have reserved a seat!" + "\n" + testEvent.getStringAvailableSeats());
 								} else if (seatsToReserve > 1) {
+									testEvent.reserveSeat(seatsToReserve);
 									System.out.println("Thanks, you have reserved " + seatsToReserve + " seats! " + testEvent.getStringAvailableSeats());
 								}
 					 		break;
@@ -99,6 +127,8 @@ public class Main {
 				 		} else {
 				 		System.out.println("How many seats reservation would you like to cancel?");
 				 		int seatsToCancel = scanner.nextInt();
+				 
+				 			
 				 			if (testEvent.cancelReservation(seatsToCancel) == 0) {
 				 				do {					
 								System.out.println("Please insert a valid number.");
@@ -106,7 +136,13 @@ public class Main {
 								} while (testEvent.cancelReservation(seatsToCancel) == 0);
 								
 				 			} 
+				 			
+				 			if (seatsToCancel == 1) {
+				 				System.out.println("You cancelled " + seatsToCancel +" seat.");
+				 			} else {
 							System.out.println("You cancelled " + seatsToCancel +" seats.");
+				 			}
+				 			
 							System.out.println(testEvent.getStringAvailableSeats());
 						}
 				 		
@@ -129,11 +165,11 @@ public class Main {
 			catch (Exception e) {
 				System.err.println("Invalid input, try again.");
 				scanner.nextLine();
-				
-			
 		}
+		
 	}
 		
+
 			
 		
 	}
