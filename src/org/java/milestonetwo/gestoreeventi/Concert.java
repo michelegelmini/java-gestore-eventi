@@ -35,6 +35,8 @@ public class Concert extends Event {
 	public void setStartingTime(LocalTime startingTime) {
 		this.startingTime = startingTime;
 	}
+	
+
 
 	public String getFormattedPrice() {
 		return String.format("%,.2f", this.getPrice());
@@ -43,7 +45,7 @@ public class Concert extends Event {
 
 	@Override
 	public String toString() {
-		return super.toString() + this.getFormattedPrice() + this.getStartingTime();
+		return super.toString() + "\n" + "The concert will start at " + this.getStartingTime() + "\n" + "The price is: € " + this.getFormattedPrice(); 
 	}
 
 }

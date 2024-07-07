@@ -73,17 +73,20 @@ public class Event {
 		}
 }
 		
-	
+	public boolean canYouReserveSeat(int seatsToReserve) {
+		if (seatsToReserve > 0 && seatsToReserve <= availableSeats) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	
 	public int reserveSeat(int seatsToReserve) {	
-		availableSeats = this.getAvailableSeats();
-		if (seatsToReserve > 0 && seatsToReserve <= availableSeats) {
+		
 				reservedSeats += seatsToReserve;
-				this.availableSeats = totalSeats - reservedSeats;
+				availableSeats = totalSeats - reservedSeats;
 				return this.getAvailableSeats();
-			} else {
-				return 0;
-			}			
+					
 	}
 	
 	
