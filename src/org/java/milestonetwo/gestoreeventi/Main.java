@@ -4,20 +4,19 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 
 public class Main {
 
 	public static void main(String[] args) {	
-		Scanner scanner = new Scanner(System.in);
-		EventProgram newProgram = new EventProgram("Events in 2024", null);
+		EventProgram newProgram = new EventProgram("Events", null);
 				
 				//loop to manage the eventlist
 				while(true) {
-				int eventListChoice;
+				int eventListChoice = 0;
 				do {
+					Scanner scanner = new Scanner(System.in);
 					System.out.println("-----------------------------------------");
 					System.out.println("Please select one option: " + "\n" + 
 										"1: Create new event" + "\n" + 
@@ -27,53 +26,57 @@ public class Main {
 										"5: Empty event list" + "\n" + 
 										"6: See event list ordered by date" + "\n" +
 										"7: Exit");
-					eventListChoice = scanner.nextInt();
-					scanner.nextLine();
 					
-					switch (eventListChoice) {
-					case 1:
-						newProgram.addEventToList(addEvent());
+				
+						eventListChoice = scanner.nextInt();
+						scanner.nextLine();
 						
-					case 2:
-						System.out.println(newProgram.getEventList());
-						break;
-					
-					case 3: 
-											
-						do {
-							System.out.println("Which date you want to check? [dd-MM-yyyy]");
-							String date = scanner.nextLine();	
-								try {
-									newProgram.getEventsInADate(date);
-									break;	
-								} catch(Exception e) {
-									System.out.println("Invalid input, try again");
-									continue;
-								}
+						switch (eventListChoice) {
+						case 1:
+							newProgram.addEventToList(addEvent());
 							
-						} while (true);
+						case 2:
+							System.out.println(newProgram.getEventList());
+							break;
 						
-						break;
-						
-					case 4:
-						System.out.println(newProgram.howManyEvents());
-						break;
-						
-					case 5:
-						newProgram.emptyList();
-						break;
-						
-					case 6:	
-						newProgram.listOrderedByDate();
-						break;
-						
-					case 7:
-						System.out.println("Thanks, bye");
-						break;
-						
-					default:
-						continue;
-					}
+						case 3: 
+												
+							do {
+								System.out.println("Which date you want to check? [dd-MM-yyyy]");
+								String date = scanner.nextLine();	
+									try {
+										newProgram.getEventsInADate(date);
+										break;	
+									} catch(Exception e) {
+										System.out.println("Invalid input, try again");
+										continue;
+									}
+								
+							} while (true);
+							
+							break;
+							
+						case 4:
+							System.out.println(newProgram.howManyEvents());
+							break;
+							
+						case 5:
+							newProgram.emptyList();
+							break;
+							
+						case 6:	
+							newProgram.listOrderedByDate();
+							break;
+							
+						case 7:
+							System.out.println("Thanks, bye");
+							scanner.close();
+							break;
+							
+						default:
+							continue;
+						}
+							
 						
 					
 				} while (eventListChoice != 7);
@@ -226,6 +229,7 @@ public class Main {
 					 		
 					 	case 3:
 					 		System.out.println("Your reservation is completed, thank you. Bye!");
+					 	
 					 		break;
 					 		
 					 	default:
@@ -236,7 +240,7 @@ public class Main {
 				 
 				} while (choice != 3);
 		
-				//scanner.close();
+		
 				return testEvent;
 	}
 			
