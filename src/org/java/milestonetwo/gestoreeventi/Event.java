@@ -3,7 +3,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 
-public class Event {
+public class Event implements Comparable<Event>{
 	
 	//instance variables
 	private String title;
@@ -33,7 +33,11 @@ public class Event {
 		this.title = title;
 	}
 
-	public String getDate() {
+	public Calendar getDate() {
+		return date;
+	}
+	
+	public String getFormattedDate() {
 		return new SimpleDateFormat("E, dd MMMM yyyy").format(date.getTime());
 	}
 		 
@@ -104,7 +108,14 @@ public class Event {
 	
 	@Override
 	public String toString() {
-		return this.getDate() + " - " + this.title;
+		return this.getFormattedDate() + " - " + this.title;
+	}
+
+
+
+	@Override
+	public int compareTo(Event event) {
+		return getDate().compareTo(event.getDate());
 	}
 	
 	

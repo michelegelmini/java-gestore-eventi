@@ -12,7 +12,11 @@ public class EventProgram {
 	
 	private String title;
 	private List<Event> eventList;
-	private int size = eventList.size();
+	
+	
+	public EventProgram() {
+		
+	}
 	
 	public EventProgram(String title, List<Event> eventList) {
 		this.title = title;
@@ -65,10 +69,12 @@ public class EventProgram {
 	}
 	
 	public String howManyEvents() {
-		return "There are " + this.size + " events in program";
+		int size = eventList.size();
+		return "There are " + size + " events in program";
 	}
 	
 	public void emptyList() {
+		int size = eventList.size();
 		if (size > 0) {
 			this.eventList.clear();
 			System.out.println("You cancelled all the events");
@@ -77,13 +83,14 @@ public class EventProgram {
 		}
 	}
 	
+	
+	
 	public void listOrderedByDate() {
-		ArrayList arrayOfDates
-		for (Event event : this.eventList) {
-			event.getDate();
+		Collections.sort(eventList);
+		for(Event event : eventList) {
+			System.out.println(event.toString());
+			System.out.println("********************");
 		}
-		
-		
-		this.eventList.stream().sorted().toList();
+			
 	}
 }

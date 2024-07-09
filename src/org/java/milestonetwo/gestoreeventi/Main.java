@@ -10,7 +10,7 @@ import java.time.LocalTime;
 
 public class Main {
 
-	public static void main(String[] args) throws ParseException {	
+	public static void main(String[] args) {	
 		Scanner scanner = new Scanner(System.in);
 		EventProgram newProgram = new EventProgram("Events in 2024", null);
 				
@@ -39,9 +39,20 @@ public class Main {
 						break;
 					
 					case 3: 
-						System.out.println("Which date you want to check? [dd-MM-yyyy]");
-						String date = scanner.nextLine();	
-						newProgram.getEventsInADate(date);
+											
+						do {
+							System.out.println("Which date you want to check? [dd-MM-yyyy]");
+							String date = scanner.nextLine();	
+								try {
+									newProgram.getEventsInADate(date);
+									break;	
+								} catch(Exception e) {
+									System.out.println("Invalid input, try again");
+									continue;
+								}
+							
+						} while (true);
+						
 						break;
 						
 					case 4:
@@ -52,7 +63,8 @@ public class Main {
 						newProgram.emptyList();
 						break;
 						
-					case 6:		
+					case 6:	
+						newProgram.listOrderedByDate();
 						break;
 						
 					case 7:
@@ -73,7 +85,7 @@ public class Main {
 		
 		
 	
-	public static Event addEvent() throws ParseException {
+	public static Event addEvent(){
 
 		// TODO Auto-generated method stub
 		
@@ -85,7 +97,8 @@ public class Main {
 		
 		
 				//insert event title
-				System.out.println("Hi! You're about to create an event" + "\n" + "What will be the event title?");
+				System.out.println("---------------------------------------------------");
+				System.out.println("You're about to create an event" + "\n" + "What will be the event title?");
 				eventTitle = scanner.nextLine();
 							
 				//insert event available seats
@@ -105,13 +118,20 @@ public class Main {
 					
 					System.out.println("When it's going to be? [dd-MM-yyyy]");
 					String eventDate = scanner.nextLine();	
-					Date dateToParse = new SimpleDateFormat("dd-MM-yyyy").parse(eventDate);
-					eventCalendar.setTime(dateToParse);
-					testEvent.setDate(eventCalendar);
+					try {
+						Date dateToParse = new SimpleDateFormat("dd-MM-yyyy").parse(eventDate);
+						eventCalendar.setTime(dateToParse);
+						testEvent.setDate(eventCalendar);
+			
+							if (!(testEvent.isValidDate(eventCalendar))) {
+									System.out.println("The event can't take place in the past, try again");
+								}		
+						
+					} catch (Exception e) {
+						System.out.println("Invalid input, try again");
+						continue;
+					}
 					
-						if (!(testEvent.isValidDate(eventCalendar))) {
-								System.out.println("The event can't take place in the past, try again");
-							}							
 				} while (!(testEvent.isValidDate(eventCalendar)));
 				
 				
@@ -216,6 +236,7 @@ public class Main {
 				 
 				} while (choice != 3);
 		
+				//scanner.close();
 				return testEvent;
 	}
 			
