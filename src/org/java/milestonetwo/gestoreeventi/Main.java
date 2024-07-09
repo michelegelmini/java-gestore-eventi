@@ -19,7 +19,7 @@ public class Main {
 		eventCalendar = Calendar.getInstance();
 		Scanner scanner = new Scanner(System.in);
 	
-		
+		while(true) {
 			try {	
 				//insert event title
 				System.out.println("Hi! You're about to create an event" + "\n" + "What will be the event title?");
@@ -57,7 +57,7 @@ public class Main {
 				int yn = 0;
 				while (yn == 0) {
 					String isConcert = scanner.nextLine();
-					if (isConcert.equals("Yes") || isConcert.equals("Y") ||isConcert.equals("1")) {
+					if (isConcert.toLowerCase().equals("yes") || isConcert.toLowerCase().equals("y") ||isConcert.equals("1")) {
 						
 						System.out.println("How much will it cost?");
 						double concertPrice = scanner.nextDouble();
@@ -67,7 +67,8 @@ public class Main {
 						testEvent = new Concert(eventTitle, eventCalendar, eventSeats, concertPrice, LocalTime.parse(concertStartingTime));
 						
 						yn = 1;
-					} else if (isConcert.equals("No") || isConcert.equals("N") || isConcert.equals("2")) {
+						
+					} else if (isConcert.toLowerCase().equals("no") || isConcert.toLowerCase().equals("n") || isConcert.equals("2")) {
 						yn = 1;	
 					}
 				}
@@ -156,7 +157,9 @@ public class Main {
 		
 			catch (Exception e) {
 				System.err.println("Invalid input, try again.");
-				//scanner.nextLine();
+				scanner.next();
+				continue;
+		}
 		}
 		
 	}
