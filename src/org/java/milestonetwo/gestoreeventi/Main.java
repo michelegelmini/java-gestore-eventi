@@ -10,7 +10,71 @@ import java.time.LocalTime;
 
 public class Main {
 
-	public static void main(String[] args) throws ParseException {
+	public static void main(String[] args) throws ParseException {	
+		Scanner scanner = new Scanner(System.in);
+		EventProgram newProgram = new EventProgram("Events in 2024", null);
+				
+				//loop to manage the eventlist
+				while(true) {
+				int eventListChoice;
+				do {
+					System.out.println("-----------------------------------------");
+					System.out.println("Please select one option: " + "\n" + 
+										"1: Create new event" + "\n" + 
+										"2: See the whole event program" + "\n" + 
+										"3: See events in a date" + "\n" + 
+										"4: See how many events are in program" + "\n" + 
+										"5: Empty event list" + "\n" + 
+										"6: See event list ordered by date" + "\n" +
+										"7: Exit");
+					eventListChoice = scanner.nextInt();
+					scanner.nextLine();
+					
+					switch (eventListChoice) {
+					case 1:
+						newProgram.addEventToList(addEvent());
+						
+					case 2:
+						System.out.println(newProgram.getEventList());
+						break;
+					
+					case 3: 
+						System.out.println("Which date you want to check? [dd-MM-yyyy]");
+						String date = scanner.nextLine();	
+						newProgram.getEventsInADate(date);
+						break;
+						
+					case 4:
+						System.out.println(newProgram.howManyEvents());
+						break;
+						
+					case 5:
+						newProgram.emptyList();
+						break;
+						
+					case 6:		
+						break;
+						
+					case 7:
+						System.out.println("Thanks, bye");
+						break;
+						
+					default:
+						continue;
+					}
+						
+					
+				} while (eventListChoice != 7);
+				
+		}
+	}
+		
+			
+		
+		
+	
+	public static Event addEvent() throws ParseException {
+
 		// TODO Auto-generated method stub
 		
 		String eventTitle;
@@ -18,9 +82,8 @@ public class Main {
 		Calendar eventCalendar = new GregorianCalendar();
 		eventCalendar = Calendar.getInstance();
 		Scanner scanner = new Scanner(System.in);
-	
-		while(true) {
-			try {	
+		
+		
 				//insert event title
 				System.out.println("Hi! You're about to create an event" + "\n" + "What will be the event title?");
 				eventTitle = scanner.nextLine();
@@ -42,8 +105,8 @@ public class Main {
 					
 					System.out.println("When it's going to be? [dd-MM-yyyy]");
 					String eventDate = scanner.nextLine();	
-					Date thedate = new SimpleDateFormat("dd-MM-yyyy").parse(eventDate);
-					eventCalendar.setTime(thedate);
+					Date dateToParse = new SimpleDateFormat("dd-MM-yyyy").parse(eventDate);
+					eventCalendar.setTime(dateToParse);
 					testEvent.setDate(eventCalendar);
 					
 						if (!(testEvent.isValidDate(eventCalendar))) {
@@ -151,20 +214,13 @@ public class Main {
 					
 					
 				 
-				} while (choice != 3);		
-				
-		}
+				} while (choice != 3);
 		
-			catch (Exception e) {
-				System.err.println("Invalid input, try again.");
-				scanner.next();
-				continue;
-		}
-		}
-		
+				return testEvent;
 	}
-		
+			
 	}
+
 	
 		
 	
