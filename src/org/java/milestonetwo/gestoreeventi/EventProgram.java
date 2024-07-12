@@ -86,6 +86,7 @@ public class EventProgram {
 	
 	public void listOrderedByDate() {
 		Collections.sort(eventList);
+		System.out.println("This is your event list ordered by date:");
 		for(Event event : eventList) {
 			System.out.println(event.toString());
 			System.out.println("********************");

@@ -13,7 +13,7 @@ public class Main {
 		EventProgram newProgram = new EventProgram("Events", null);
 				
 				//loop to manage the eventlist
-				while(true) {
+				
 				int eventListChoice = 0;
 				do {
 					Scanner scanner = new Scanner(System.in);
@@ -70,7 +70,6 @@ public class Main {
 							
 						case 7:
 							System.out.println("Thanks, bye");
-							scanner.close();
 							break;
 							
 						default:
@@ -82,7 +81,7 @@ public class Main {
 				} while (eventListChoice != 7);
 				
 		}
-	}
+	
 		
 			
 		
@@ -96,7 +95,10 @@ public class Main {
 		int eventSeats;
 		Calendar eventCalendar = new GregorianCalendar();
 		eventCalendar = Calendar.getInstance();
-		Scanner scanner = new Scanner(System.in);
+	
+		
+		
+		   Scanner scanner = new Scanner(System.in);
 		
 		
 				//insert event title
@@ -163,14 +165,14 @@ public class Main {
 				System.out.println(testEvent.getStringAvailableSeats());
 				
 				//loop to reserve or cancel a seat
-				int choice;						
+				int reserveCancelChoice;						
 				do {
 					System.out.println("-----------------------------------------");
 					System.out.println("What do you want to do now?" + "\n" + "1: Reserve some seats" + "\n" + "2: Cancel reservations" + "\n" + "3: Exit");
-					choice = scanner.nextInt();
+					reserveCancelChoice = scanner.nextInt();
 					scanner.nextLine();		
 				
-					 switch(choice) {
+					 switch(reserveCancelChoice) {
 					 	case 1: 
 					 		
 					 		if (testEvent.getAvailableSeats() >= 1) {
@@ -238,7 +240,7 @@ public class Main {
 					
 					
 				 
-				} while (choice != 3);
+				} while (reserveCancelChoice != 3);
 		
 		
 				return testEvent;
