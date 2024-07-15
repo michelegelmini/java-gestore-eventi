@@ -12,7 +12,7 @@ public class EventProgram {
 	private String title;
 	private List<Event> eventList;
 	
-	
+	//constructors
 	public EventProgram() {
 		
 	}
@@ -22,6 +22,7 @@ public class EventProgram {
 		this.eventList = new ArrayList<Event>();		
 	}
 
+	//getters and setters
 	public String getTitle() {
 		return title;
 	}
@@ -38,6 +39,7 @@ public class EventProgram {
 		this.eventList = eventList;
 	}
 
+	//custom methods
 	public void addEventToList(Event eventToAdd) {
 		this.eventList.add(eventToAdd);
 	}
@@ -49,14 +51,14 @@ public class EventProgram {
 		boolean areThereEvents = false;
 		
 		for (Event event : this.eventList) {
-			if (date.equals(event.getDate())) {
+			if (date.equals(event.getFormattedDate())) {
 				areThereEvents = true;
 			} 
 		}		
 			if (areThereEvents == true) {
 				System.out.println("The events at " + date + " are:");
 				for (Event event : this.eventList) {
-					if (date.equals(event.getDate())) {
+					if (date.equals(event.getFormattedDate())) {
 						System.out.println(event.toString());
 					}
 			}
@@ -78,7 +80,7 @@ public class EventProgram {
 			this.eventList.clear();
 			System.out.println("You cancelled all the events");
 		} else {
-			System.out.println("There are no events in program!");
+			System.out.println("There are no events scheduled!");
 		}
 	}
 	
@@ -88,8 +90,7 @@ public class EventProgram {
 		Collections.sort(eventList);
 		System.out.println("This is your event list ordered by date:");
 		for(Event event : eventList) {
-			System.out.println(event.toString());
-			System.out.println("********************");
+			System.out.println(event.getFormattedDate() + "-" + event.getTitle());
 		}
 			
 	}

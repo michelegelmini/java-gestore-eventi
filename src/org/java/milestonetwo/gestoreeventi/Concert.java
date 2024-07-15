@@ -15,7 +15,6 @@ public class Concert extends Event {
 	
 	public Concert(String title, Calendar date, int totalSeats, double price, LocalTime startingTime) {
 		super(title, date, totalSeats);
-		// TODO Auto-generated constructor stub
 		this.price = price;
 		this.startingTime = startingTime;
 	}

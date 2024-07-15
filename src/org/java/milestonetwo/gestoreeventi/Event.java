@@ -46,6 +46,22 @@ public class Event implements Comparable<Event>{
 			
 	}
 	
+	public int getTotalSeats() {
+		return totalSeats;
+	}
+	
+	public int getReservedSeats() {
+		return reservedSeats;
+	}
+	
+	public int getAvailableSeats() {
+		return availableSeats;
+	}
+	
+	
+	
+	
+	//custom methods
 	public boolean isValidDate(Calendar date) {
 		if (date.after(Calendar.getInstance())) {	
 			return true;
@@ -54,17 +70,6 @@ public class Event implements Comparable<Event>{
 			}
 	}
 
-	public int getTotalSeats() {
-		return totalSeats;
-	}
-
-	public int getReservedSeats() {
-		return reservedSeats;
-	}
-	
-	public int getAvailableSeats() {
-		return availableSeats;
-	}
 	
 	public String getStringAvailableSeats() {				
 		
